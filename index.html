@@ -7,8 +7,33 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    
+    <div id="container">
+        <div id="start">
+            <h1>Coding Quiz Challenge!</h1>
+            <h3>Try to answer the following code related questions within the time limit. Keep in mind that incorrect answers will penalize your time and score by 10 points!</h3>
+            <div><button id="btnStart"><span>Start Quiz</span></button></div>
+        </div>
+        <br><br>
+        <div id="quiz">
+            <div id="question"></div>
+            <div id="buttons">
+                <div><button id="1"><span id="choice1"></span></button></div>
+                <div><button id="2"><span id="choice2"></span></button></div>
+                <div><button id="3"><span id="choice3"></span></button></div>
+                <div><button id="4"><span id="choice4"></span></button></div>            
+            </div>
+            <div id="timer">
+                <div id="counter"></div>
+                <div id="btimeGauge"></div>
+                <div id="timeGauge"></div>
+            </div>
+            <div id="progress"></div>
+        </div>
+        <div id="scoreContainer" style="display: none"></div>
+    </div>
 
 <script src="./script.js"></script>    
 </body>
 </html>
+
+
