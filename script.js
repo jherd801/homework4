@@ -1,6 +1,5 @@
-let docElID = document.getElementById
-
 // DOM Elements
+let welcomeScreen = document.getElementById("start");
 let start = document.getElementById("btnStart");
 let quiz = document.getElementById("quiz");
 let question = document.getElementById("question");
@@ -17,6 +16,14 @@ let counter = document.getElementById("counter");
 let timeGauge = document.getElementById("timeGauge");
 let progress = document.getElementById("progress");
 let scoreDiv = document.getElementById("scoreContainer");
+let selection = document.getElementsByClassName("choices");
+
+// Hide quiz when page initially loads
+function hideQuiz () {
+    quiz.setAttribute("class", "hide")
+};
+
+hideQuiz();
 
 // Array with questions and answers structured as separate items
 let questions = [
@@ -65,13 +72,35 @@ let questions = [
 // Create questions
 let lastQuestion = questions.length -1;
 let runningQuestion = 0;
-let quizTime = 75;
+let quizTime = questions.length * 15;
 let timer;
 
-// Begin quiz and hide quiz title and descrition
-start.addEventListener("click", renderQuestions());
+// Event listener to start timer and hide quiz title and description
+start.addEventListener("click", function() {
+    setTime();
+    startQuiz();
+});
 
-// Render and display questions
+// Function to start the quiz timer with an initial time of 15 seconds per question
+function setTime() {
+    var timerInterval = setInterval(function() {
+        quizTime--;
+        timeGauge.textContent = quizTime;
+
+        if(quizTime === 0) {
+            clearInterval(timerInterval);
+            sendMessage();
+        }
+    }, 1000);
+}
+
+function sendMessage() {
+    timeGauge.textContent = "Time's up!"
+}
+
+
+
+// Render and display questions, starting with index 0 in the questions array
 function renderQuestions() {
     let q = questions[runningQuestion];
     question.innerText = q.question;
@@ -79,22 +108,25 @@ function renderQuestions() {
     choice2.innerText = q.choice2;
     choice3.innerText = q.choice3;
     choice4.innerText = q.choice4;
-}
+
+// +++++++++++++++++++++++ Why is this adding more than 1 to runningQuestion on subsequent clicks? +++++++++++++++
+    btn1.addEventListener("click", function() {
+        runningQuestion++;
+        console.log(runningQuestion);
+        renderQuestions();
+    })
+};
 
 // Begin quiz
 function startQuiz () {
-    quiz.style.display = "none";
+    // Hide welcome screen
+    welcomeScreen.setAttribute("class", "hide")
+    // Display questions
     renderQuestions();
-    quiz.style.display = "block";
-    timer = setInterval(1000);
-}
+    quiz.setAttribute("class", "display")
+};
 
-startQuiz();
 
-console.log(question);
-console.log(choice1);
-console.log(choice2);
-console.log(choice3);
-console.log(choice4);
-console.log(timer);
-console.log(quizTime);
+
+
+
